@@ -1,0 +1,669 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Luật chơi cờ vua SCHESS</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="3a0653de-33a8-4637-b53e-b1d3131674e8" class="page sans"><header><img class="page-cover-image" src="https://images.unsplash.com/photo-1638209354307-ea437d712fad?ixlib=rb-1.2.1&amp;q=80&amp;cs=tinysrgb&amp;fm=jpg&amp;crop=entropy" style="object-position:center 44.330000000000005%"/><h1 class="page-title">Luật chơi cờ vua SCHESS</h1></header><div class="page-body"><h1 id="8b36eb25-7f42-48fe-8daf-256b464d664a" class=""><mark class="highlight-red">Chế độ đấu</mark></h1><h2 id="8e2b99c6-211f-46ff-9bfc-dfc30818ffaa" class=""><mark class="highlight-blue">Đấu tập</mark></h2><ul id="97df0352-ecad-4852-87f0-e50b11d92eec" class="bulleted-list"><li style="list-style-type:disc">Đây là chế độ luyện tập dành cho hai người chơi. </li></ul><ul id="709b985b-2d27-45ed-b66a-3fd5dd35ab48" class="bulleted-list"><li style="list-style-type:disc">Hai bạn sẽ chơi chung với nhau trên cùng một máy.</li></ul><h2 id="c5546fc9-e8d4-44f6-ad01-b97e1431b75c" class=""><mark class="highlight-blue">Đấu hạng</mark></h2><ul id="a8e14eed-eb96-4a3c-ac18-cb9ccdbd292e" class="bulleted-list"><li style="list-style-type:disc">Đây là chế độ thi đấu và xếp hạng giúp tăng tính cạnh tranh cho trò chơi. </li></ul><ul id="cd43ad51-4982-4429-a9f6-4f53ed43e5d6" class="bulleted-list"><li style="list-style-type:disc">Khi chọn đấu hạng, người chơi sẽ được máy chủ xếp ngẫu nhiên vào phòng cùng một người chơi khác cũng chơi tại thời điểm đó.</li></ul><ul id="a850549d-d19d-4cfa-a6f1-7a22d8d55e7f" class="bulleted-list"><li style="list-style-type:disc">Sau khi kết thúc trận đấu, người chơi sẽ được tính điểm, tính xác suất thắng và hiển thị trên bảng xếp hạng tại trang chủ.<ul id="b93aec80-c98a-4c6e-8116-e728a05c1cb0" class="bulleted-list"><li style="list-style-type:circle"><strong>Thắng:</strong> +5 điểm</li></ul><ul id="6f30efbd-275b-4126-992d-a616a0730012" class="bulleted-list"><li style="list-style-type:circle"><strong>Hòa:</strong> +1 điểm</li></ul><ul id="c5fb35a5-0626-43d4-a47b-e0806b694c6f" class="bulleted-list"><li style="list-style-type:circle"><strong>Thua: </strong>-2 điểm</li></ul></li></ul><ul id="114b0465-850c-41ac-98e8-9f86353a4730" class="bulleted-list"><li style="list-style-type:disc">Trận đấu chỉ hòa khi cả hai người chơi đều đồng ý cầu hòa.</li></ul><h1 id="57f798d3-8377-49e2-9aa4-a9f09b1b2f31" class=""><mark class="highlight-red">Cách di chuyển quân</mark></h1><blockquote id="8d3730c7-a58e-4029-86fd-92f4865c66bb" class="block-color-orange_background"><strong>Tất cả các quân cờ đều không thể đi nếu bị chặn lối đi, quân cờ không đi qua đầu các quân khác (trừ quân Mã)</strong></blockquote><blockquote id="4b19719b-4416-44fc-aa4d-8c75ec912826" class="block-color-orange_background"><strong>Các quân cờ của mình chỉ tấn công được các quân cờ của đối phương (ăn quân cờ) khi các quân cờ của mình dừng chân tại ô mà quân cờ của đối phương đang đứng</strong></blockquote><ul id="bfedc398-38fb-4560-9227-3578690244bb" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue"><strong>Quân Tốt:</strong></mark><mark class="highlight-teal"><strong> </strong></mark>đi thẳng và đi tiến, tấn công các quân cờ khác tại ô chéo liền kề ở phía</li></ul><p id="77ee21ec-e951-45c5-a5b6-2a2309fff96b" class="">trước nó.</p><ul id="5f5fcf88-105e-4c7a-b425-1b22e4f8cb38" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue"><strong>Quân Xe:</strong></mark> đi hàng dọc và hàng ngang tính theo ô quân Xe đang đứng, tấn công các quân cờ khác trên đường đi của nó.</li></ul><ul id="6355a339-3f24-4018-af9b-a71d5e4a087c" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue"><strong>Quân Mã:</strong></mark> đi theo hình chữ L tính theo ô quân Mã đang đứng, tấn công các quân cờ khác trên đường đi của nó.</li></ul><ul id="bcf0e23c-b184-4dd9-af5d-ed789b53440e" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue"><strong>Quân Tượng:</strong></mark> đi vào các ô chéo tính theo ô mà quân Tượng đang đứng, tấn công các quân cờ khác trên đường đi của nó.</li></ul><ul id="db97b597-7387-40e3-a0f0-f7999fdb30ac" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue"><strong>Quân Hậu:</strong></mark> đi vào các ô ngang, dọc và chéo tính theo ô mà quân Hậu đang đứng, tấn công các quân cờ khác trên đường đi của nó.</li></ul><ul id="9df532d1-7be3-4296-99e6-6d645aa8f5f5" class="bulleted-list"><li style="list-style-type:disc"><strong><mark class="highlight-blue">Quân Vua:</mark></strong> đi đến 1 ô liền kề nó, tấn công các quân cờ khác trên đường đi của nó.</li></ul><h1 id="97ea4c0d-a59c-47fd-a39d-11fdbf6053ef" class=""><mark class="highlight-red">Luật chơi</mark></h1><ul id="9f76854f-2701-4998-8970-155a4f4d4581" class="bulleted-list"><li style="list-style-type:disc">Bên chọn quân cờ màu trắng được xuất quân trước</li></ul><ul id="492fc775-4ff4-4964-af9f-75b2a9e35f88" class="bulleted-list"><li style="list-style-type:disc">Người chơi sẽ tuân thủ sự bố trí các quân cờ và cách di chuyển các quân cờ đã nêu trên.</li></ul><ul id="0feb03e0-9451-497a-9917-e3d95eb9acd5" class="bulleted-list"><li style="list-style-type:disc">Trò chơi kết thúc khi một trong hai bên chiếm được quân Vua của đối phương (thắng) hoặc không có trường hợp nào khả thi để cả hai bên chiếm được quân Vua của người còn lại (hòa)</li></ul><h1 id="19954f4e-c240-4f8e-a093-bcf5dcb12b47" class=""><mark class="highlight-red">Một số trường hợp đặc biệt trong luật chơi cờ vua</mark></h1><h2 id="80e92914-e21c-47d2-97ff-e3dc6e38ec9d" class=""><mark class="highlight-blue">Phong cấp</mark></h2><ul id="09b51094-eadc-4ded-9d9e-4c7fc13fe6c3" class="bulleted-list"><li style="list-style-type:disc">Quân Tốt sẽ được phong cấp thành 1 trong các quân (Xe, Mã, Tượng, Hậu).</li></ul><h3 id="71f86320-463f-4b63-b1d4-cc55306ed14d" class=""><strong>Điều kiện: </strong></h3><ul id="99d2c590-093a-4eba-b817-f8bf89a33f00" class="bulleted-list"><li style="list-style-type:disc">Khi Quân Tốt đi tới hàng cuối cùng ở phía bên kia bàn cờ.</li></ul><h2 id="99367664-1dfc-4756-9bab-746287ef590d" class=""><mark class="highlight-blue">Nhập thành</mark></h2><ul id="d3fdd510-8657-4734-bc9e-c509f9d0dec4" class="bulleted-list"><li style="list-style-type:disc">Khi quân Xe và Vua đổi chỗ cho nhau. Quân Vua đi ngang 1 bước để đến cạnh quân Xe, quân Xe đi ngang 2 hoặc 3 bước để đến cạnh quân Sau đó quân Xe và quân Vua đổi chỗ cho nhau.</li></ul><h3 id="b21656da-c3d3-41df-95ec-846519e6a740" class=""><strong>Điều kiện: </strong></h3><ul id="1f10eda8-baae-404c-875b-efc504755b0c" class="bulleted-list"><li style="list-style-type:disc">Giữa quân Xe và quân Vua không có quân nào khác</li></ul><ul id="4de1af3c-86a7-4978-83df-0c822f9ea581" class="bulleted-list"><li style="list-style-type:disc">Quân Xe và quân Vua chưa di chuyển từ đầu trận</li></ul><ul id="9bcfe624-df95-4c65-8528-641cc29ea0af" class="bulleted-list"><li style="list-style-type:disc">Quân Vua đang không bị chiếu tướng</li></ul><h2 id="17a00c0e-e4cc-4d44-ac49-52420d397bb7" class=""><mark class="highlight-blue"><strong>Bắt tốt qua đường</strong></mark></h2><ul id="c50125ba-eb3b-4d3d-bc87-37ad03f9b4a3" class="bulleted-list"><li style="list-style-type:disc">Quân Tốt của đối thủ đang ở ô bên cạnh trên cùng một hàng với Quân Tốt của mình, Quân Tốt của mình có thể đi chéo qua quân đó và bắt tốt của đối thủ.</li></ul><h3 id="d0687856-3607-4ce5-93bb-048fee7358c4" class=""><strong>Điều kiện: </strong></h3><ul id="92954adc-5346-4928-8707-8c3ab64f8c28" class="bulleted-list"><li style="list-style-type:disc">Quân Tốt của mình phải bắt đầu tiến quân bằng 2 ô và chưa di chuyển thêm một lượt nào khác.</li></ul></div></article></body></html>
